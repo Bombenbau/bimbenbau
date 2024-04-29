@@ -22,12 +22,8 @@ WebServer server(80);
 #define SENSOR_AXIS_Y1 34
 #define SENSOR_AXIS_Y2 35
 
-#define SENSOR_AXIS_Z1 32
-#define SENSOR_AXIS_Z2 33
-
 #define SERVO_AXIS_X 25
 #define SERVO_AXIS_Y 26
-#define SERVO_AXIS_Z 27
 
 void handleRequest (String path, void (*handler)()) {
   server.on(path, [handler]() { // Capture the handler variable
@@ -38,7 +34,6 @@ void handleRequest (String path, void (*handler)()) {
 
 Servo servoX;
 Servo servoY;
-Servo servoZ;
 
 void setup () {
   WiFi.mode(WIFI_AP);
@@ -48,12 +43,10 @@ void setup () {
 
   servoX.attach(SERVO_AXIS_X);
   servoY.attach(SERVO_AXIS_Y);
-  servoZ.attach(SERVO_AXIS_Z);
 }
 
 int servoXAngle = 0;
 int servoYAngle = 0;
-int servoZAngle = 0;
 
 void loop () {
   server.handleClient();
@@ -65,28 +58,21 @@ void loop () {
   int sensorY1Value = analogRead(SENSOR_AXIS_Y1);
   int sensorY2Value = analogRead(SENSOR_AXIS_Y2);
 
-  int sensorZ1Value = analogRead(SENSOR_AXIS_Z1);
-  int sensorZ2Value = analogRead(SENSOR_AXIS_Z2);
-
   // Calculate the average value of the photoresistors
   int sensorXValue = (sensorX1Value + sensorX2Value) / 2;
   int sensorYValue = (sensorY1Value + sensorY2Value) / 2;
-  int sensorZValue = (sensorZ1Value + sensorZ2Value) / 2;
 
   // Calculate the difference between the photoresistors
   int sensorXDiff = sensorX1Value - sensorX2Value;
   int sensorYDiff = sensorY1Value - sensorY2Value;
-  int sensorZDiff = sensorZ1Value - sensorZ2Value;
 
   // Calculate the servo angles
   servoXAngle = map(sensorXDiff, -1023, 1023, SERVO_MIN_ANGLE, SERVO_MAX_ANGLE);
   servoYAngle = map(sensorYDiff, -1023, 1023, SERVO_MIN_ANGLE, SERVO_MAX_ANGLE);
-  servoZAngle = map(sensorZDiff, -1023, 1023, SERVO_MIN_ANGLE, SERVO_MAX_ANGLE);
 
   // Move the servos
   servoX.write(servoXAngle);
   servoY.write(servoYAngle);
-  servoZ.write(servoZAngle);
 
   delay(100);
 }
