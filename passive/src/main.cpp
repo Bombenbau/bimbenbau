@@ -15,7 +15,7 @@ WebServer server(80);
 
 #define SERVO_AXIS_X 25
 #define SERVO_AXIS_Y 26
-#define WAIT_TIME 1000  //tbd
+#define WAIT_TIME    5000  //tbd
 
 void handleRequest (String path, void (*handler)()) {
   server.on(path, [handler]() { // Capture the handler variable
@@ -30,19 +30,21 @@ Servo servoY;
 void setup () {
   WiFi.mode(WIFI_AP);
   WiFi.softAP(ssid, password);
-
   server.begin();
 
   servoX.attach(SERVO_AXIS_X);
   servoY.attach(SERVO_AXIS_Y);
+  
+  servoY.write(0);
+  servoX.write(0);
 }
 
 void loop () {
   server.handleClient();
   // Move the servos to each of the positions
-  for (auto& rows : servoCoordinates) {
-    servoY.write(rows[0]); //Write altitude
-    servoX.write(rows[1]); //Write azimuth
-    delay(WAIT_TIME); //Delay so the servos can move
-  }
+  // for (auto& rows : servoCoordinates) {
+  //   servoY.write(rows[0]); //Write altitude
+  //   servoX.write(rows[1]); //Write azimuth
+  //   delay(WAIT_TIME); //Delay so the servos can move
+  // }
 }
