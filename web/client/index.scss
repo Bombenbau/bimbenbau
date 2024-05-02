@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
+@import url("https://dnascanner.de/colorset.css");
+
+::-webkit-scrollbar {
+	width: 0.65rem;
+}
+
+::-webkit-scrollbar-track {
+	background-color: var(--transparent);
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: var(--light-gray);
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: var(--black);
+	transition: all 0.5s;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: "Ubuntu", sans-serif;
+	color: var(--white);
+	text-decoration: none;
+	scroll-behavior: smooth;
+}
+
+body {
+	background-color: var(--gray);
+}

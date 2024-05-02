@@ -13,16 +13,12 @@ const users: User[] = [];
 
 Deno.serve((req: Request) => {
 	if (req.headers.get("upgrade") != "websocket") {
-		const path = new URL(req.url).pathname;
+		let path = new URL(req.url).pathname;
+		if (path === "/") path = "/index.html";
+
+		console.log(path);
 
 		switch (path) {
-			case "/":
-				return new Response("Hello, world!", {
-					headers: {
-						"Content-Type": "text/plain",
-					},
-				});
-
 			default:
 				try {
 					const file = Deno.openSync("./client" + path, {read: true});
