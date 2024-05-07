@@ -1,12 +1,5 @@
 #include <Arduino.h>
-#include <WiFi.h>
-#include <WebServer.h>
 #include <ESP32Servo.h>
-
-const char* ssid = "bombenbaukasten";
-const char* password = "legalize nuclear bombs";
-
-WebServer server(80);
 
 // My plan is to build a solar tracker using 2 servo motors and 6 photoresistors, 2 for each axis. I want to compare the values of the photoresistors and move the servos accordingly.
 // In order to achieve good / accurate results, the servos are allowed to move slowly
@@ -16,31 +9,19 @@ WebServer server(80);
 #define SERVO_MIN_ANGLE 0
 #define SERVO_MAX_ANGLE 180
 
-#define SENSOR_AXIS_X1 36
-#define SENSOR_AXIS_X2 39
+#define SENSOR_AXIS_X1 33
+#define SENSOR_AXIS_X2 32
 
-#define SENSOR_AXIS_Y1 34
-#define SENSOR_AXIS_Y2 35
+#define SENSOR_AXIS_Y1 35
+#define SENSOR_AXIS_Y2 34
 
 #define SERVO_AXIS_X 25
 #define SERVO_AXIS_Y 26
-
-void handleRequest (String path, void (*handler)()) {
-  server.on(path, [handler]() { // Capture the handler variable
-    // server.send(200, "", "");
-    handler();
-  });
-}
 
 Servo servoX;
 Servo servoY;
 
 void setup () {
-  WiFi.mode(WIFI_AP);
-  WiFi.softAP(ssid, password);
-
-  server.begin();
-
   servoX.attach(SERVO_AXIS_X);
   servoY.attach(SERVO_AXIS_Y);
 }
@@ -49,8 +30,6 @@ int servoXAngle = 0;
 int servoYAngle = 0;
 
 void loop () {
-  server.handleClient();
-  
   // Read the values of the photoresistors
   int sensorX1Value = analogRead(SENSOR_AXIS_X1);
   int sensorX2Value = analogRead(SENSOR_AXIS_X2);
