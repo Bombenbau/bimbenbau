@@ -9,14 +9,14 @@
 #define SERVO_MIN_ANGLE 0
 #define SERVO_MAX_ANGLE 180
 
-#define SENSOR_AXIS_X1 33
-#define SENSOR_AXIS_X2 32
+#define SENSOR_AXIS_X1 25
+#define SENSOR_AXIS_X2 26
 
 #define SENSOR_AXIS_Y1 35
 #define SENSOR_AXIS_Y2 34
 
-#define SERVO_AXIS_X 25
-#define SERVO_AXIS_Y 26
+#define SERVO_AXIS_X 11
+#define SERVO_AXIS_Y 10
 
 Servo servoX;
 Servo servoY;
@@ -24,6 +24,8 @@ Servo servoY;
 void setup () {
   servoX.attach(SERVO_AXIS_X);
   servoY.attach(SERVO_AXIS_Y);
+
+  Serial.begin(115200);
 }
 
 int servoXAngle = 0;
@@ -38,20 +40,14 @@ void loop () {
   int sensorY2Value = analogRead(SENSOR_AXIS_Y2);
 
   // Calculate the average value of the photoresistors
-  int sensorXValue = (sensorX1Value + sensorX2Value) / 2;
-  int sensorYValue = (sensorY1Value + sensorY2Value) / 2;
-
-  // Calculate the difference between the photoresistors
-  int sensorXDiff = sensorX1Value - sensorX2Value;
-  int sensorYDiff = sensorY1Value - sensorY2Value;
-
-  // Calculate the servo angles
-  servoXAngle = map(sensorXDiff, -1023, 1023, SERVO_MIN_ANGLE, SERVO_MAX_ANGLE);
-  servoYAngle = map(sensorYDiff, -1023, 1023, SERVO_MIN_ANGLE, SERVO_MAX_ANGLE);
-
-  // Move the servos
-  servoX.write(servoXAngle);
-  servoY.write(servoYAngle);
+  Serial.print("\nX1: ");
+  Serial.println(sensorX1Value);
+  Serial.print("X2: ");
+  Serial.println(sensorX2Value);
+  Serial.print("Y1: ");
+  Serial.println(sensorY1Value);
+  Serial.print("Y2: ");
+  Serial.println(sensorY2Value);
 
   delay(100);
 }
