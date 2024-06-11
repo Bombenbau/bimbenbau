@@ -7,13 +7,12 @@
 // The servo's maximum angle is 180 degress
 
 #define SERVO_MIN_ANGLE 0
-#define SERVO_MAX_ANGLE 180
+#define SERVO_MAX_ANGLE 180 
 
-#define SENSOR_AXIS_X1 25
-#define SENSOR_AXIS_X2 26
-
-#define SENSOR_AXIS_Y1 35
-#define SENSOR_AXIS_Y2 34
+#define SENSOR_AXIS_X1 0
+#define SENSOR_AXIS_X2 1
+#define SENSOR_AXIS_Y1 2
+#define SENSOR_AXIS_Y2 3
 
 #define SERVO_AXIS_X 11
 #define SERVO_AXIS_Y 10
@@ -50,4 +49,11 @@ void loop () {
   Serial.println(sensorY2Value);
 
   delay(100);
+}
+
+
+//Convert the desired angle to servo angle, 0 = -90
+void moveServoX(int angle) {
+  int angleOut = 180 - angle;
+  servoX.write(angleOut);
 }
