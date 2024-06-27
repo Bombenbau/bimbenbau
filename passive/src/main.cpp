@@ -9,7 +9,7 @@ int servoCoordinates[5][2] = {{10, 160}, {25, 120}, {50, 90}, {25, 60}, {10, 20}
 
 #define SERVO_AXIS_X 11
 #define SERVO_AXIS_Y 10
-#define BUTTON_PIN 9
+#define BUTTON_PIN 2
 
 Servo servoX;
 Servo servoY;
